@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
-public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -48,22 +48,17 @@ public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <link href=\"public/css/loggin.css\" rel=\"stylesheet\" type=\"text/css\"> \n");
-      out.write("        <title>Login</title>\n");
+      out.write("        <link href=\"public/css/home.css\" rel=\"stylesheet\" type=\"text/css\">\n");
+      out.write("        <title>Home</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("        <div class=\"body-login\">\n");
-      out.write("            <h2>Login to your account</h2>\n");
-      out.write("            <form action=\"login\" method=\"POST\">\n");
-      out.write("                <input type=\"text\" title=\"username\" placeholder=\"username\" name=\"username\"/>\n");
-      out.write("                <input type=\"password\" title=\"username\" placeholder=\"password\" name=\"password\"/>\n");
-      out.write("                <button type=\"submit\" class=\"btn\">Login</button>\n");
-      out.write("            </form>\n");
-      out.write("            \n");
-      out.write("            <p class=\"error\">");
-      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${error}", java.lang.String.class, (PageContext)_jspx_page_context, null));
-      out.write("</p>\n");
+      out.write("        <div class=\"topnav\">\n");
+      out.write("            <a class=\"active\" href=\"#home\">Home</a>\n");
+      out.write("            <a href=\"#news\">News</a>\n");
+      out.write("            <a href=\"#contact\">Contact</a>\n");
+      out.write("            <a href=\"#about\">About</a>\n");
       out.write("        </div>\n");
+      out.write("\n");
       out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {

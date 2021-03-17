@@ -2,6 +2,7 @@ package entities;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,6 +19,8 @@ public class Post {
     private String author_name;
     private Date date_time;
     private String content;
+    private ArrayList<Comment> comments;
+    private int numberOfComment;
 
     public Post() {
     }
@@ -27,6 +30,22 @@ public class Post {
         this.author_name = author_name;
         this.date_time = date_time;
         this.content = content;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public int getNumberOfComment() {
+        return numberOfComment;
+    }
+
+    public void setNumberOfComment(int numberOfComment) {
+        this.numberOfComment = numberOfComment;
     }
 
     public int getPost_id() {

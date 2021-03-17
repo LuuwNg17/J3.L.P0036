@@ -9,14 +9,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link href="public/css/loggin.css" rel="stylesheet" type="text/css"> 
+        <title>Login</title>
     </head>
     <body>
-        <h2>Login to your account</h2>
-        <form>
-            <input type="text" title="username" placeholder="username" />
-            <input type="password" title="username" placeholder="password" />
-            <button type="submit" class="btn">Login</button>
-        </form>
+        <div class="body-login">
+            <h2>Login to your account</h2>
+            <form action="login" method="POST">
+                <input type="text" title="username" placeholder="username" name="username"/>
+                <input type="password" title="username" placeholder="password" name="password"/>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+            <p class="error">${error}</p>
+        </div>
     </body>
 </html>

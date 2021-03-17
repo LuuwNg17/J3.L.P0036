@@ -17,23 +17,25 @@ import java.sql.SQLException;
  * @author ThaiDuongNg
  */
 public class UserDAO {
-    public User getUserByUsername(String user_name) throws SQLException {
+    public User getUserByUsernameAndPassword(String user_name, String password) throws SQLException {
         DBContext db = null;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from [User] where user_name = ? ";
+        String sql = "select * from [User] where user_name = ? and password = ?";
         User user = new User();
         try{
             db = new DBContext();
             conn = db.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, user_name);
+            ps.setString(2, password);
             rs = ps.executeQuery();
             
             while(rs.next()) {
-                String password = rs.getString("password");
-                user = new User(user_name, password);
+                String username = rs.getString("user_name");
+                String psw = rs.getString("password");
+                user = new User(username, password);
                 
             }
         }catch(Exception ex) {
@@ -47,7 +49,5 @@ public class UserDAO {
     
     public static void main(String[] args) throws SQLException {
         UserDAO dao = new UserDAO();
-        User user = dao.getUserByUsername("user1");
-         System.out.println(user.getPassword());
     }
 }

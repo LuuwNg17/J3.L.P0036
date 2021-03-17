@@ -197,10 +197,46 @@ public class CommentDAO {
     }
 
     //switch alert status
+    //count commnet of post
+    public int getNumberOfCommentInPost(int postId) throws SQLException {
+        DBContext db = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "select count(comment_id) as number from Comment "
+                + "where Comment.post_id = ?";
+
+        try {
+            db = new DBContext();
+            conn = db.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, postId);
+            rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                int number = rs.getInt("number");
+                return number;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(conn, ps, rs);
+        }
+        return 0;
+    }
+
     public static void main(String[] args) throws SQLException {
         CommentDAO dao = new CommentDAO();
 
-        dao.rejectCommentwithReason(2, 1004);
+        
+        System.out.println(dao.getNumberOfCommentInPost(1));
+//        dao.rejectCommentwithReason(2, 1004);
+//        ArrayList<Comment> comments = dao.getAllCommentToManagebyPostAuthor("user1");
+//
+//        for (Comment comment : comments) {
+//            System.out.println(comment.getComment_content());
+//        }
 
 //        Comment comment = new Comment("user2", 3, "y???????", false, 1, false);
 //
