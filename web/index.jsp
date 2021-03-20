@@ -20,7 +20,7 @@
                     <a class="path" href="#contact">Approve Comment</a>
                 </div>
                 <div class="right">
-                    <a class="user-name">Welcome Ngu</a>
+                    <a class="user-name">Welcome ${sessionScope.user.user_name}</a>
                     <a class="path" href="logout">Logout</a>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                         <br>
                         <br>
                         <hr>
-                        <form action="home" method="POST">
+                        <form action="add_comment?post_id=${post.post_id}" method="POST">
                             <textarea rows="4" cols="50" name="comment_content" placeholder="Comment"></textarea>
                             <button type="submit" class="btn">Add Comment</button>
                         </form>

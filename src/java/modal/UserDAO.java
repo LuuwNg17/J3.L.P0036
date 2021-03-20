@@ -23,7 +23,6 @@ public class UserDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "select * from [User] where user_name = ? and password = ?";
-        User user = new User();
         try{
             db = new DBContext();
             conn = db.getConnection();
@@ -35,7 +34,8 @@ public class UserDAO {
             while(rs.next()) {
                 String username = rs.getString("user_name");
                 String psw = rs.getString("password");
-                user = new User(username, password);
+                User user = new User(username, psw);
+                return user;
                 
             }
         }catch(Exception ex) {
@@ -43,11 +43,13 @@ public class UserDAO {
         }finally {
             db.closeConnection(conn, ps, rs);
         }
-        return user;
+        return null;
     }
     
     
     public static void main(String[] args) throws SQLException {
         UserDAO dao = new UserDAO();
+        User user = dao.getUserByUsernameAndPassword("aaa", "dasd");
+        System.err.println(user.getUser_name() + "|" + user.getPassword());
     }
 }
