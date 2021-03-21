@@ -15,7 +15,7 @@
         <div class="topnav">
             <div class="left">
                 <a class="${home}" href="home">Posts</a>
-                <a class="${approve}" href="approve?type=all">Approve Comment</a>
+                <a class="${approve}" href="approve?type=0">Approve Comment</a>
             </div>
             <div class="right">
                 <a class="user-name">Welcome ${sessionScope.user.user_name}</a>

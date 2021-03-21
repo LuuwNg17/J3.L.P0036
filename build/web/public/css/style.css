@@ -109,6 +109,8 @@ table {
 
 a {
     font-size: 12px;
+    color: blue;
+    text-decoration: none;
 }
 
 .table-body {
@@ -116,5 +118,8 @@ a {
     margin-bottom: 100px;
 }
 
+span {
+    color: #2a2a2a;
+}
 
 

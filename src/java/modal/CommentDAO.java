@@ -146,7 +146,8 @@ public class CommentDAO {
 
         String sql = "UPDATE [dbo].[Comment] "
                 + "SET [isApproved] = 1, "
-                + "[status_alert] = 1 "
+                + "[status_alert] = 1, "
+                + "[reject_reason_id] = 1 "
                 + "WHERE [comment_id] = ?";
 
         try {

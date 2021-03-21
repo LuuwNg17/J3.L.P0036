@@ -111,7 +111,7 @@ public class Comment {
     }
 
     public String getDateFormat() {
-        return new SimpleDateFormat("MMMM dd yyy '-' HH:mmaaa")
+        return new SimpleDateFormat("yyyy/MM/dd 'at' HH:mmaaa")
                 .format(this.date_time).toLowerCase();
     }
 

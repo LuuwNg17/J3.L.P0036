@@ -18,18 +18,21 @@
             <%@include file="components/header.jsp" %>
 
             <p>Comment</p>
-            <p>
-                <a href="approve?type=all">All(${number})</a> |
-                <a href="approve?type=0">Pending(${number})</a> | 
-                <a href="approve?type=1">Approved(${number})</a> | 
-                <a href="approve?type=2">Spam(${number})</a> | 
-                <a href="approve?type=3">Trash(${number})</a> 
+            <p style="padding: 10px;">
+                <a href="approve?type=all">All <span>(${numberAll})</span></a> |
+                <a href="approve?type=0">Pending <span>(${numberPending})</span></a> | 
+                <a href="approve?type=1">Approved <span>(${numberApproved})</span></a> | 
+                <a href="approve?type=2">Spam <span>(${numberSpam})</span></a> | 
+                <a href="approve?type=3">Trash <span>(${numberTrash})</span></a> 
             </p>
             <div class="table-body">
                 <table>
+                    <c:if test="${comments.size() == 0}">
+                        <p>You do not have any comments to approve</p>
+                    </c:if>
                     <c:forEach var="cmt" items="${comments}">
                         <tr style="background-color: white">
-                            <td>Author</td>
+                            <td>Author</td> 
                             <td> Comment</td>
                             <td>In Response To</td>
                             <td>Submitted On</td>
@@ -42,20 +45,24 @@
                                 ${cmt.comment_content}
                                 <br>
                                 <p>
-                                    <a>Approve</a> |
+                                    <a href="handle_comment?type=1&id=${cmt.comment_id}">Approve</a> |
                                     <a>Reply</a> | 
                                     <a>Quick Edit</a> | 
                                     <a>Edit</a> | 
-                                    <a>Spam</a> |
-                                    <a>Trash</a> 
+                                    <a href="handle_comment?type=2&id=${cmt.comment_id}">Spam</a> |
+                                    <a href="handle_comment?type=3&id=${cmt.comment_id}">Trash</a> 
                                 </p>
                             </td>
                             <td>
-                                Phan mem dich vu Ssas la gi
+                                <c:forEach var="post" items="${posts}">
+                                    <c:if test="${post.post_id == cmt.post_id}">
+                                        ${post.post_title}
+                                    </c:if>
+                                </c:forEach>
                                 <br>
                                 <a href="#">View post</a>
                             </td>
-                            <td>2021-03-02 00:00:00.000</td>
+                            <td>${cmt.getDateFormat()}</td>
                         </c:forEach>
                     </tr>
                 </table>

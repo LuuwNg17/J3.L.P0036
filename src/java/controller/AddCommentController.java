@@ -66,7 +66,8 @@ public class AddCommentController extends HttpServlet {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("error", "Sorry! Error occurred");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
     }

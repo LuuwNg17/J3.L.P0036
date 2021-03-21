@@ -6,6 +6,7 @@
 package controller;
 
 import entities.Comment;
+import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modal.CommentDAO;
+import modal.PostDAO;
 
 /**
  *
@@ -34,42 +36,59 @@ public class ApprovalController extends HttpServlet {
             //get filter comment by ...
             String type = request.getParameter("type");
             CommentDAO cmtDao = new CommentDAO();
-            ArrayList<Comment> comments
-                    = cmtDao.getAllCommentToManagebyPostAuthor("user1");
+            PostDAO postDao = new PostDAO();
+            
+            User user = (User)request.getSession(false).getAttribute("user");
+            
+            ArrayList<Comment> allComments
+                    = cmtDao.getAllCommentToManagebyPostAuthor(user.getUser_name());
+            
+            List<Comment> pedingComment = allComments.stream()
+                        .filter(cmt -> cmt.isIsApproved() == false 
+                                && cmt.getReject_reason_id() == 1)
+                        .collect(Collectors.toList());
+            
+            List<Comment> approvedComment = allComments.stream()
+                        .filter(cmt -> cmt.isIsApproved() == true)
+                        .collect(Collectors.toList());
 
+            List<Comment> spamComment = allComments.stream()
+                        .filter(cmt -> cmt.getReject_reason_id()== 2)
+                        .collect(Collectors.toList());
+            
+            List<Comment> trashComment = allComments.stream()
+                        .filter(cmt -> cmt.getReject_reason_id()== 3)
+                        .collect(Collectors.toList());
             //all comment
             if (type.equals("all")) {
-                request.setAttribute("comments", comments);
+                
+                request.setAttribute("comments", allComments);
 
             } //peding comment
             else if (type.equals("0")) {
-                List<Comment> list = comments.stream()
-                        .filter(cmt -> cmt.isIsApproved() == false)
-                        .collect(Collectors.toList());
-                request.setAttribute("comments", list);
+                request.setAttribute("comments", pedingComment);
             } //approved comment
             else if (type.equals("1")) {
-               List<Comment> list = comments.stream()
-                        .filter(cmt -> cmt.isIsApproved() == true)
-                        .collect(Collectors.toList());
-                request.setAttribute("comments", list);
+               
+                request.setAttribute("comments", approvedComment);
             } //spam coomment
             else if (type.equals("2")) {
-                List<Comment> list = comments.stream()
-                        .filter(cmt -> cmt.getReject_reason_id()== 2)
-                        .collect(Collectors.toList());
-                request.setAttribute("comments", list);
+                
+                request.setAttribute("comments", spamComment);
             } //trash comment
             else if (type.equals("3")) {
-                List<Comment> list = comments.stream()
-                        .filter(cmt -> cmt.getReject_reason_id()== 3)
-                        .collect(Collectors.toList());
-                request.setAttribute("comments", list);
-                request.setAttribute("comments", list);
+                
+                request.setAttribute("comments", trashComment);
             } else {
                 request.setAttribute("error", "Sorry! can not handle your request");
                 request.getRequestDispatcher("error.jsp").forward(request, response);
             }
+            request.setAttribute("numberAll", allComments.size());
+            request.setAttribute("numberPending", pedingComment.size());
+            request.setAttribute("numberApproved", approvedComment.size());
+            request.setAttribute("numberSpam", spamComment.size());
+            request.setAttribute("numberTrash", trashComment.size());
+            request.setAttribute("posts", postDao.getAllPost());
             request.setAttribute("approve", "active");
             request.getRequestDispatcher("approve.jsp").forward(request, response);
 
