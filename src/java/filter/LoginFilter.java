@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ThaiDuongNg
  */
-@WebFilter(filterName = "LoginFilter", urlPatterns = {"/home"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+@WebFilter(filterName = "LoginFilter", urlPatterns = {"/home", "/add_comment"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class LoginFilter implements Filter {
 
     private static final boolean debug = true;
@@ -63,8 +63,8 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
         if (httpServletRequest.getSession(false).getAttribute("user") == null) {
-            httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, httpServletResponse);
-        }
+            httpServletRequest.getRequestDispatcher("login").forward(httpServletRequest, httpServletResponse);
+        } 
 
         Throwable problem = null;
         try {

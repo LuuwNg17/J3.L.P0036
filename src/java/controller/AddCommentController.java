@@ -37,24 +37,24 @@ public class AddCommentController extends HttpServlet {
             int post_id = Integer.parseInt(request.getParameter("post_id"));
 
             String comment_content = request.getParameter("comment_content");
-            User user = (User) request.getSession(false).getAttribute("user");
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            User user = (User) request.getSession().getAttribute("user");
+            
+            String user_name = user.getUser_name();
 
             PostDAO postDao = new PostDAO();
 
             Comment comment = new Comment();
 
             //comment was added by author always auto approve
-            boolean isApproved = false;
-            if (user.getUser_name() == postDao.getPostById(post_id).getAuthor_name()) {
-                isApproved = true;
+            if (user.getUser_name().equals(postDao.getPostById(post_id).getAuthor_name())) {
                 comment = new Comment(user.getUser_name(),
                         post_id, comment_content,
-                        isApproved, 1, true);
+                        true, 1, true);
             } else {
-                isApproved = false;
                 comment = new Comment(user.getUser_name(),
                         post_id, comment_content,
-                        isApproved, 1, false);
+                        false, 1, false);
             }
 
             CommentDAO commentDao = new CommentDAO();

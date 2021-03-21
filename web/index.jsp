@@ -9,38 +9,45 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="public/css/home.css" rel="stylesheet" type="text/css">
+        <link href="public/css/style.css" rel="stylesheet" type="text/css">
         <title>Home</title>
     </head>
     <body>
         <div class="container">
-            <div class="topnav">
-                <div class="left">
-                    <a class="active" href="#home">Posts</a>
-                    <a class="path" href="#contact">Approve Comment</a>
-                </div>
-                <div class="right">
-                    <a class="user-name">Welcome ${sessionScope.user.user_name}</a>
-                    <a class="path" href="logout">Logout</a>
-                </div>
-            </div>
+            <!--header-->
+            <%@include file="components/header.jsp" %>
+
             <c:forEach var="post" items="${posts}">
                 <div class="home-body">
                     <div class="post-content">
-                        <p>${post.author_name}</p>
-                        <p>${post.content}</p>
-                        <h5>${post.numberOfComment} bình luận</h5>
+                        <p class="post-content-text">
+                            ${post.post_title}.<br>
+                            <span>${post.content}</span>
+                        </p>
+                        <p style="color: #2a2a2a; font-size: 14px;">
+                            by ${post.author_name}
+                        </p>
+                        <b style="font-size: 12px">${post.numberOfComment} bình luận</b>
                         <hr>
                         <c:forEach var="comment" items="${post.comments}">
-                            <a><b>${comment.user_name}</b></a> <span>${comment.comment_content}</span>
-                            <br>
+
+                            <!--display all comment of post have been approved-->
+                            <c:if test="${comment.isApproved == true}">
+                                <p style="font-size: 12px">
+                                    <b>${comment.user_name}</b>. <span>${comment.comment_content}</span>
+                                </p>
+                            </c:if>
                         </c:forEach>
                         <br>
-                        <br>
                         <hr>
+                        <p>Leave a Reply</p>
                         <form action="add_comment?post_id=${post.post_id}" method="POST">
-                            <textarea rows="4" cols="50" name="comment_content" placeholder="Comment"></textarea>
-                            <button type="submit" class="btn">Add Comment</button>
+                            <p class="text-gray">
+                                Logged in as ${sessionScope.user.user_name}. 
+                                <a class="text-gray" href="logout">Log out</a>
+                            </p>
+                            <textarea rows="6" cols="50" name="comment_content" placeholder="Comment"></textarea>
+                            <button cols="50" type="submit" class="btn-commnent">Add Comment</button>
                         </form>
                     </div>
                 </div>

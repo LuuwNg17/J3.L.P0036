@@ -3,7 +3,7 @@
     Created on : Mar 17, 2021, 11:15:31 AM
     Author     : ThaiDuongNg
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,10 +18,10 @@
             <form action="login" method="POST">
                 <input type="text" title="username" placeholder="username" name="username"/>
                 <input type="password" title="username" placeholder="password" name="password"/>
+                <p style="color: red">${error}</p>
                 <button type="submit" class="btn">Login</button>
             </form>
             
-            <p class="error">${error}</p>
         </div>
     </body>
 </html>

@@ -39,16 +39,16 @@ public class LoginController extends HttpServlet {
             UserDAO dao = new UserDAO();
 
             User user = dao.getUserByUsernameAndPassword(username, password);
-            System.out.println(user.getPassword());
             if (user != null) {
                 request.getSession().setAttribute("user", user);
                 response.sendRedirect("home");
             } else {
                 request.setAttribute("error", "Username or password is incorrect");
-                response.sendRedirect("login.jsp");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("error", "Sorry! Error occurred");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
     }

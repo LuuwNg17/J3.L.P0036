@@ -1,0 +1,120 @@
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #2a2a2a;
+    width: 800px;
+    margin: auto;
+}
+
+.topnav a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.topnav a.path:hover {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #757575;
+    color: white;
+}
+
+.container {
+    width: 800px;
+    min-height: 100%;
+    margin: auto;
+    background-color: white;
+}
+
+.home-body {
+    margin-top: 20px;
+}
+
+.post-content {
+    background-color: white;
+    margin: 20px;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+}
+
+.post-content-text {
+    color: #757575;
+    font-size: 14px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+
+button {
+    background: #2a2a2a;
+    color: white;
+    width: 200px;
+    height: 30px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+textarea {
+    display: block;
+}
+
+.text-gray {
+    color: #757575;
+    font-size: 12px;
+}
+.btn-commnent {
+    background-color: yellowgreen;
+    border: none;
+}
+
+.footer {
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: -200px;
+}
+
+.text-footer {
+    color: #757575;
+    font-size: 14px;
+}
+
+td {
+    vertical-align: top;
+    padding: 10px;
+    font-size: 12px;
+    color: #2a2a2a;
+}
+
+table {
+    width: 100%;
+}
+
+a {
+    font-size: 12px;
+}
+
+.table-body {
+    background-color: #f2f2f2;
+    margin-bottom: 100px;
+}
+
+
+

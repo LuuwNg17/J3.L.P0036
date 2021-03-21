@@ -19,17 +19,27 @@ public class Post {
     private String author_name;
     private Date date_time;
     private String content;
+    private String post_title;
     private ArrayList<Comment> comments;
     private int numberOfComment;
 
     public Post() {
     }
 
-    public Post(int post_id, String author_name, Date date_time, String content) {
+    public Post(int post_id, String author_name, Date date_time, String content, String post_title) {
         this.post_id = post_id;
         this.author_name = author_name;
         this.date_time = date_time;
         this.content = content;
+        this.post_title = post_title;
+    }
+
+    public String getPost_title() {
+        return post_title;
+    }
+
+    public void setPost_title(String post_title) {
+        this.post_title = post_title;
     }
 
     public ArrayList<Comment> getComments() {

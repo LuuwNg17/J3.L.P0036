@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,34 +28,41 @@ import modal.PostDAO;
  */
 public class HomeController extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         try {
             PostDAO postDao = new PostDAO();
             ArrayList<Post> posts = postDao.getAllPost();
-            
+
             CommentDAO cmtDao = new CommentDAO();
-            request.setAttribute("posts", posts);
+            
             for (Post post : posts) {
+//                //filter list comment have been approved
+//                List<Comment> comments
+//                        = cmtDao.getAllCommentByPostId(post.getPost_id())
+//                                .stream()
+//                                .filter(cmt -> cmt.isIsApproved() == true)
+//                                .collect(Collectors.toList());
+
                 post.setComments(cmtDao.getAllCommentByPostId(post.getPost_id()));
                 post.setNumberOfComment(cmtDao.getNumberOfCommentInPost(post.getPost_id()));
             }
-            
+            request.setAttribute("posts", posts);
+            request.setAttribute("home", "active");
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            request.setAttribute("error", "Sorry! Error occurred");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
-    
-    
+
 }

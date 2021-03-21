@@ -205,7 +205,7 @@ public class CommentDAO {
         ResultSet rs = null;
 
         String sql = "select count(comment_id) as number from Comment "
-                + "where Comment.post_id = ?";
+                + "where Comment.post_id = ? and [isApproved] = 1";
 
         try {
             db = new DBContext();
@@ -229,24 +229,9 @@ public class CommentDAO {
     public static void main(String[] args) throws SQLException {
         CommentDAO dao = new CommentDAO();
 
-        
-        System.out.println(dao.getNumberOfCommentInPost(1));
-//        dao.rejectCommentwithReason(2, 1004);
-//        ArrayList<Comment> comments = dao.getAllCommentToManagebyPostAuthor("user1");
-//
-//        for (Comment comment : comments) {
-//            System.out.println(comment.getComment_content());
-//        }
-
-//        Comment comment = new Comment("user2", 3, "y???????", false, 1, false);
-//
-//        dao.addCommentToPost(comment);
-//        ArrayList<Comment> comments = new ArrayList<>();
-//        comments = dao.getAllCommentToManagebyPostAuthor("user1");
-//
-//        for (Comment comment : comments) {
-//            System.out.println(comment.getComment_content());
-//
-//        }
+        ArrayList<Comment> al = dao.getAllCommentToManagebyPostAuthor("user1");
+        for (Comment comment : al) {
+            System.out.println(comment.getComment_content() + '\n');
+        }
     }
 }
