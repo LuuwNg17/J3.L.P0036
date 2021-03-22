@@ -7,6 +7,7 @@ package controller;
 
 import entities.Comment;
 import entities.Post;
+import entities.Reply;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -49,7 +50,16 @@ public class HomeController extends HttpServlet {
                 post.setComments(cmtDao.getAllCommentByPostId(post.getPost_id()));
                 post.setNumberOfComment(cmtDao.getNumberOfCommentInPost(post.getPost_id()));
             }
+            
+            
+            
+            ArrayList<Reply> replies = cmtDao.getAllReplies();
+            
+            
             request.setAttribute("posts", posts);
+//            
+//            request.setAttribute("rep", replies.get(0));
+            request.setAttribute("replies", replies);
             request.setAttribute("home", "active");
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (SQLException ex) {

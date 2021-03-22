@@ -7,6 +7,7 @@ package modal;
 
 import db.DBContext;
 import entities.Comment;
+import entities.Reply;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -226,13 +227,96 @@ public class CommentDAO {
         }
         return 0;
     }
+    
+    //reply comment
+    public boolean addReplyComment(Reply reply ) throws SQLException {
+        DBContext db = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "INSERT INTO [dbo].[ReplyComment]\n"
+                + "           ([comment_id] \n"
+                + "           , [reply_content]\n"
+                + "           , [author_name])\n"
+                + "     VALUES(?, ? , ?)";
 
+        try {
+            db = new DBContext();
+            conn = db.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, reply.getComment_id());
+            ps.setString(2, reply.getReply_content());
+            ps.setString(3, reply.getAuthor_name());
+
+            ps.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(conn, ps, rs);
+        }
+        return false;
+    }
+
+    
+    //display reply comment
+    public ArrayList<Reply> getAllReplies() throws SQLException {
+        
+        DBContext db = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select * from ReplyComment";
+
+        ArrayList<Reply> replies = new ArrayList<>();
+
+        try {
+            db = new DBContext();
+            conn = db.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                int cmt_id = rs.getInt("comment_id");;
+                String reply_content = rs.getString("reply_content");
+                String author_name = rs.getString("author_name");
+                int reply_id = rs.getInt("reply_id");
+                
+                Reply reply = new Reply(reply_id, reply_content, author_name, cmt_id);
+                
+                replies.add(reply);
+            }
+            
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(conn, ps, rs);
+        }
+        return replies;
+    }
+    
+    
     public static void main(String[] args) throws SQLException {
         CommentDAO dao = new CommentDAO();
-
-        ArrayList<Comment> al = dao.getAllCommentToManagebyPostAuthor("user1");
-        for (Comment comment : al) {
-            System.out.println(comment.getComment_content() + '\n');
+        
+        Reply reply = new Reply();
+        
+        reply.setAuthor_name("user1");
+        reply.setReply_content("dasdhashdbahsbdjsa");
+        reply.setComment_id(1027);
+        
+        dao.addReplyComment(reply);
+        
+        ArrayList<Reply> replies = dao.getAllReplies();
+        
+        for (Reply reply1 : replies) {
+            System.out.println(reply1.getReply_content());
         }
+
+//        ArrayList<Comment> al = dao.getAllCommentToManagebyPostAuthor("user1");
+//        for (Comment comment : al) {
+//            System.out.println(comment.getComment_content() + '\n');
+//        }
     }
 }

@@ -15,6 +15,7 @@
     <body>
         <div class="body-login">
             <h2>Login to your account</h2>
+            <p>
             <form action="login" method="POST">
                 <input type="text" title="username" placeholder="username" name="username"/>
                 <input type="password" title="username" placeholder="password" name="password"/>

@@ -35,7 +35,15 @@
                             <c:if test="${comment.isApproved == true}">
                                 <p style="font-size: 12px">
                                     <b>${comment.user_name}</b>. <span>${comment.comment_content}</span>
+
                                 </p>
+                                <c:forEach var="reply" items="${replies}">
+                                    <c:if test="${reply.comment_id == comment.comment_id}">
+                                        <p style="font-size: 12px; margin-left: 15px;">
+                                            -> ${reply.author_name}.${reply.reply_content}
+                                        </p>
+                                    </c:if>
+                                </c:forEach>
                             </c:if>
                         </c:forEach>
                         <br>

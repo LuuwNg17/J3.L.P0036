@@ -46,7 +46,7 @@
                                 <br>
                                 <p>
                                     <a href="handle_comment?type=1&id=${cmt.comment_id}">Approve</a> |
-                                    <a>Reply</a> | 
+                                    <a href="reply?id=${cmt.comment_id}">Reply</a> | 
                                     <a>Quick Edit</a> | 
                                     <a>Edit</a> | 
                                     <a href="handle_comment?type=2&id=${cmt.comment_id}">Spam</a> |
