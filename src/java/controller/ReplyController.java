@@ -33,12 +33,20 @@ public class ReplyController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
+            //comment id
             int id = Integer.parseInt(request.getParameter("id"));
 
-            PostDAO postDao = new PostDAO();
-            Post post = postDao.getPostById(id);
+            CommentDAO cmtDao = new CommentDAO();
+            
+            Comment comment = cmtDao.getCommentByID(id);
+            
+            ArrayList<Reply> replies = cmtDao.getAllReplies();
+            
+//            PostDAO postDao = new PostDAO();
+//            Post post = postDao.getPostById(id);
 
-            request.setAttribute("post", post);
+            request.setAttribute("comment", comment);
+            request.setAttribute("replies", replies);
             request.setAttribute("id", id);
 
             request.getRequestDispatcher("reply.jsp").forward(request, response);

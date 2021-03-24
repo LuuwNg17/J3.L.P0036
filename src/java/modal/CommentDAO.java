@@ -59,6 +59,44 @@ public class CommentDAO {
         }
         return comments;
     }
+    
+    //get comment by comment id
+    public Comment getCommentByID(int id) throws SQLException {
+        DBContext db = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select * from Comment where comment_id = ?";
+        
+        try { 
+            db = new DBContext();
+            conn = db.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                int comment_id = rs.getInt("comment_id");
+                int post_id = rs.getInt("post_id");
+                String user_name = rs.getString("user_name");
+                String content = rs.getString("comment_content");
+                Date date_time = rs.getDate("date_time");
+                boolean isApproved = rs.getBoolean("isApproved");
+                int reject_reason_id = rs.getInt("reject_reason_id");
+                boolean status_alert = rs.getBoolean("status_alert");
+
+                Comment comment = new Comment(comment_id, user_name, post_id,
+                        content, date_time, isApproved, reject_reason_id, status_alert);
+                return comment;
+            }
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.closeConnection(conn, ps, rs);
+        }
+        
+        return null;
+    }
 
     //get all comment by post has been writen by post_author
     public ArrayList<Comment> getAllCommentToManagebyPostAuthor(String post_author) throws SQLException {

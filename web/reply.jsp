@@ -16,13 +16,21 @@
     <body>
         <div class="container">
             <div>
-                <p>${post.post_title}</p>
-                <p>${post.content}</p>
+                <p>${comment.comment_content}</p>
+                <p style="font-size: 12px;">.by ${comment.user_name}</p>
+                <hr>
+                <c:forEach var="reply" items="${replies}">
+                    <c:if test="${reply.comment_id == comment.comment_id}">
+                        <p style="font-size: 12px; margin-left: 15px;">
+                            -> ${reply.author_name}.${reply.reply_content}
+                        </p>
+                    </c:if>
+                </c:forEach>    
             </div>
-                <form action="reply?id=${id}" method="POST">
+            <form action="reply?id=${id}" method="POST">
                 <input type="text" name="cmt_content" placeholder="comment..."/>
                 <br>
-                 <button type="submit" class="btn">Add Reply</button>
+                <button type="submit" class="btn">Add Reply</button>
             </form>
         </div>
     </body>
